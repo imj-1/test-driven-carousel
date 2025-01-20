@@ -1,0 +1,2 @@
+// .prettierrc.cjs
+module.exports = {};

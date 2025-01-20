@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "lint": "eslint . && prettier --list-different .",
+    "format": "eslint --fix . && prettier --loglevel warn --write .",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -13,9 +15,16 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/eslint": "^8.21.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
     "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.4",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
   }
