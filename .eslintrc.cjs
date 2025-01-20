@@ -6,6 +6,7 @@ module.exports = {
     "prettier",
     "plugin:react/recommended", // brings in rules from the plugin
     "plugin:react/jsx-runtime", // brings in rules from the plugin
+    "plugin:testing-library/react",
   ],
   settings: {
     //tells the plugin to detect the React version that's installed
