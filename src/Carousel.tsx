@@ -15,7 +15,7 @@ const Carousel = ({ slides }: { slides?: Slide[] }) => {
     <div data-testid="carousel">
       <CarouselSlide {...slides?.[slideIndex]} />
       <CarouselButton
-        data-testId="prev-button"
+        data-testid="prev-button"
         onClick={() => {
           if (!slides) return;
           setSlideIndex((i) => (i + slides.length - 1) % slides.length);
@@ -24,7 +24,7 @@ const Carousel = ({ slides }: { slides?: Slide[] }) => {
         Prev
       </CarouselButton>
       <CarouselButton
-        data-testId="next-button"
+        data-testid="next-button"
         onClick={() => {
           if (!slides) return;
           setSlideIndex((i) => (i + 1) % slides.length);
