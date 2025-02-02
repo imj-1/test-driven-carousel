@@ -18,9 +18,9 @@ type ImgComponentProps = {
 
 const ScaledImg = styled.img<ImgComponentProps>`
   object-fit: cover;
-  widdth: 100%;
-  height ${(props) =>
-    typeof props.$height === "number" ? `{props.$height}px` : props.$height};
+  width: 100%;
+  height: ${(props) =>
+    typeof props.$height === "number" ? `${props.$height}px` : props.$height};
 `;
 
 const CarouselSlide = ({
