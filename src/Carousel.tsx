@@ -12,8 +12,9 @@ type Slide = {
 
 export type CarouselProps = {
   slides?: Slide[];
-  slideIndex: number;
+  slideIndex?: number;
   onSlideIndexChange?: (newSlideIndex: number) => void;
+  autoAdvanceInterval?: number;
   DefaultImgComponent?: CarouselSlideProps["ImgComponent"];
   defaultImgHeight?: CarouselSlideProps["imgHeight"];
 };
@@ -22,11 +23,17 @@ const Carousel = ({
   slides,
   slideIndex: slideIndexProp,
   onSlideIndexChange,
+  autoAdvanceInterval,
   DefaultImgComponent,
   defaultImgHeight,
 }: CarouselProps) => {
   const [slideIndex, decrementSlideIndex, incremementSlideIndex] =
-    useSlideIndex(slides, slideIndexProp, onSlideIndexChange);
+    useSlideIndex(
+      slides,
+      slideIndexProp,
+      onSlideIndexChange,
+      autoAdvanceInterval
+    );
   return (
     <div data-testid="carousel">
       <CarouselSlide

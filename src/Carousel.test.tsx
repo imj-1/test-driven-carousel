@@ -1,5 +1,5 @@
 // Carousel.test.tsx;
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Carousel from "./Carousel";
 import slides from "./example/slides";
@@ -120,5 +120,26 @@ describe("with contorlled slideIndex", () => {
     await user.click(nextButton);
     expect(img).toHaveAttribute("src", slides[1].imgUrl);
     expect(onSlideIndexChange).toHaveBeenCalledWith(2);
+  });
+});
+
+describe("with auto-advance", () => {
+  it("advances the slide according to autoAdvanceInterval", () => {
+    const autoAdvanceInterval = 5_000;
+    render(
+      <Carousel slides={slides} autoAdvanceInterval={autoAdvanceInterval} />
+    );
+    const img = screen.getByRole("img");
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+
+    act(() => {
+      vi.advanceTimersByTime(autoAdvanceInterval);
+    });
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+
+    act(() => {
+      vi.advanceTimersByTime(autoAdvanceInterval);
+    });
+    expect(img).toHaveAttribute("src", slides[2].imgUrl);
   });
 });
