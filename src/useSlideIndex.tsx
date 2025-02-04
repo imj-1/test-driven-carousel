@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTimeout } from "./useTimeout";
 
 const decrement = (length: number) => (i: number) => (i + length - 1) % length;
@@ -21,11 +21,14 @@ export const useSlideIndex = (
     onSlideIndexChange?.(decrement(slides.length)(slideIndex));
   };
 
-  const incrementSlideIndex = () => {
-    if (!slides) return;
+  const onSlideIndexChangeRef = useRef(onSlideIndexChange);
+  onSlideIndexChangeRef.current = onSlideIndexChange;
+
+  const incrementSlideIndex = useCallback(() => {
+    if (!slides?.length) return;
     setSlideIndexState(increment(slides.length));
-    onSlideIndexChange?.(increment(slides.length)(slideIndex));
-  };
+    onSlideIndexChangeRef.current?.(increment(slides.length)(slideIndex));
+  }, [slides?.length, slideIndex]);
 
   useTimeout(autoAdvanceInterval, incrementSlideIndex);
 

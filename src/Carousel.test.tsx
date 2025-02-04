@@ -142,4 +142,52 @@ describe("with auto-advance", () => {
     });
     expect(img).toHaveAttribute("src", slides[2].imgUrl);
   });
+
+  it("does not reset the auto-advance timer on re-render", () => {
+    const autoAdvanceInterval = 5_000;
+    const { rerender } = render(
+      <Carousel slides={slides} autoAdvanceInterval={autoAdvanceInterval} />
+    );
+    const img = screen.getByRole("img");
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+
+    act(() => {
+      vi.advanceTimersByTime(autoAdvanceInterval - 1);
+    });
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+
+    rerender(
+      <Carousel slides={slides} autoAdvanceInterval={autoAdvanceInterval} />
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+  });
+
+  it("does not reset the timer on irrelevant prop changes", () => {
+    const autoAdvanceInterval = 5_000;
+    const CarouselParent = () => (
+      <Carousel
+        slides={[...slides]}
+        onSlideIndexChange={vi.fn()}
+        autoAdvanceInterval={autoAdvanceInterval}
+      />
+    );
+    const { rerender } = render(<CarouselParent />);
+    const img = screen.getByRole("img");
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+
+    act(() => {
+      vi.advanceTimersByTime(autoAdvanceInterval - 1);
+    });
+
+    rerender(<CarouselParent />);
+
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+  });
 });
